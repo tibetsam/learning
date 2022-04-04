@@ -1,0 +1,12 @@
+#!/bin/bash
+#echo $(pwd)
+if [ $# -lt 1 ]; then
+        i=1 
+else
+        i=$1
+fi
+
+while [ $i -ge 1 ]; do
+        cd ..
+        i=$((i-1))
+done

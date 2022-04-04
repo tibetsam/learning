@@ -1,0 +1,34 @@
+#!/bin/bash
+dlist=~/bin/dirlist
+if [ $# -gt 0 ]; then
+    clist=$1
+else
+    clist=0
+fi
+
+fgb () {
+    if [ $clist -le 1 ]; then
+        cd ${lines[-2]}
+        sed -i '$d' $dlist
+    else
+        elem=$(( numbers - $clist - 1 ))
+        line=${lines[$elem]}
+        cd $line
+        `cat /dev/null > $dlist` 
+        if [ $elem -ge 1 ]; then
+            newline=("${lines[@]::$elem}")
+            for i in ${newline[@]}; do
+                echo $i >> $dlist
+            done
+            pwd >> $dlist
+        fi
+    fi
+}
+
+lines=($(cat $dlist))
+numbers=${#lines[@]}
+if [[ $numbers -lt 2 || $clist -gt $numbers ]]; then
+    pwd
+else
+    fgb
+fi
